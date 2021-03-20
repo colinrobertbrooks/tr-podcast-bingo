@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/tr-podcast-bingo/static/css/main.c40567f3.chunk.css",
-    "main.js": "/tr-podcast-bingo/static/js/main.270dd194.chunk.js",
-    "main.js.map": "/tr-podcast-bingo/static/js/main.270dd194.chunk.js.map",
+    "main.js": "/tr-podcast-bingo/static/js/main.0d9123f3.chunk.js",
+    "main.js.map": "/tr-podcast-bingo/static/js/main.0d9123f3.chunk.js.map",
     "runtime-main.js": "/tr-podcast-bingo/static/js/runtime-main.1f1c14c1.js",
     "runtime-main.js.map": "/tr-podcast-bingo/static/js/runtime-main.1f1c14c1.js.map",
     "static/js/2.2ff612ad.chunk.js": "/tr-podcast-bingo/static/js/2.2ff612ad.chunk.js",
@@ -15,6 +15,6 @@
     "static/js/runtime-main.1f1c14c1.js",
     "static/js/2.2ff612ad.chunk.js",
     "static/css/main.c40567f3.chunk.css",
-    "static/js/main.270dd194.chunk.js"
+    "static/js/main.0d9123f3.chunk.js"
   ]
 }
