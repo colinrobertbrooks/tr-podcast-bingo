@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack://src/index.css"],"names":[],"mappings":"AAAA,EACE,oEACF,CAEA,6CACE,YACF","file":"main.c40567f3.chunk.css","sourcesContent":["* {\n  font-family: \"proxima-nova\", Helvetica Neue, Helvetica, Arial, sans-serif;\n}\n\n.js-focus-visible :focus:not(.focus-visible) {\n  outline: none;\n}\n"]}
