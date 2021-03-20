@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { initialOptions, initialSelections } from "../data";
+import { getRandomOptions, initialSelections } from "../data";
 import { colors } from "../styles";
 import { Card, Row, Square } from "./styled";
 import { encodePosition, decodePosition, checkIsGameOver } from "../utils";
@@ -9,7 +9,7 @@ const App = () => {
   /*
    *  card
    */
-  const [options] = useState<string[][]>(initialOptions); // NOTE: could randomize
+  const [options, setOptions] = useState<string[][]>(getRandomOptions);
   const [selections, setSelections] = useState<number[][]>(initialSelections);
 
   /*
@@ -37,6 +37,7 @@ const App = () => {
   const isGameOver = checkIsGameOver(selections);
 
   const handleReset = () => {
+    setOptions(getRandomOptions);
     setSelections(initialSelections);
   };
 
