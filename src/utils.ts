@@ -1,4 +1,7 @@
-const checkIsAllOnes = (row: number[]) => row.every((square) => square === 1);
+type Row = number[];
+type Card = Row[];
+
+const checkIsAllOnes = (row: Row) => row.every((square) => square === 1);
 
 // https://stackoverflow.com/a/41772644
 const transpose = (card: any[][]) =>
@@ -7,13 +10,28 @@ const transpose = (card: any[][]) =>
     []
   );
 
-export const checkIsGameOver = (card: number[][]): boolean => {
+// top left to bottom right
+const getDexter = (card: Card) => {
+  const dexter = [];
+  for (let i = 0; i < card.length; i++) {
+    dexter.push(card[i][i]);
+  }
+  return dexter;
+};
+
+// top right to bottom left
+const getSinister = (card: Card) => {
+  const sinister = [];
+  for (let i = 0; i < card.length; i++) {
+    sinister.push(card[i][card.length - i]);
+  }
+  return sinister;
+};
+
+export const checkIsGameOver = (card: Card): boolean => {
   const across = card.some((row) => checkIsAllOnes(row));
   const down = transpose(card).some((row) => checkIsAllOnes(row));
-  // TODO: generate
-  const dexter = [card[0][0], card[1][1], card[2][2], card[3][3], card[4][4]];
-  // TODO: generate
-  const sinister = [card[0][4], card[1][3], card[2][2], card[3][1], card[4][0]];
-  const diagonal = checkIsAllOnes(dexter) || checkIsAllOnes(sinister);
+  const diagonal =
+    checkIsAllOnes(getDexter(card)) || checkIsAllOnes(getSinister(card));
   return across || down || diagonal;
 };
