@@ -3,14 +3,14 @@ import styled from "styled-components";
 import useSize from "@react-hook/size";
 import FitText from "@kennethormandy/react-fittext";
 import { colors, unstyledButtonCSS } from "../../styles";
-import { TR_LOGO_SQUARE } from "../../constants";
+import { FREE_SPACE } from "../../constants";
 import logoSrc from "../../images/logo.png";
 import Confetti from "./Confetti";
 
 /*
- *  container
+ *  card
  */
-export const Board = styled.div`
+export const Card = styled.div`
   box-shadow: 0px 0px 12px 0px rgba(0, 25, 50, 0.12);
   max-height: 80vh;
   max-width: 80vh;
@@ -69,14 +69,14 @@ export const Square: React.FC<ISquareProps> = ({
 }) => {
   const borderRef = useRef(null);
   const [borderWidth] = useSize(borderRef);
-  const isLogoSquare = children?.toString().includes(TR_LOGO_SQUARE);
+  const isLogoSquare = children?.toString().includes(FREE_SPACE);
 
   return (
     <SquareOuter ref={borderRef} style={{ minHeight: borderWidth }}>
       {isLogoSquare ? (
         <>
           <Confetti active={isDisabled} />
-          <img src={logoSrc} alt="Logo" className="img-fluid" />
+          <img src={logoSrc} alt="Free space" className="img-fluid" />
         </>
       ) : (
         <SquareButton

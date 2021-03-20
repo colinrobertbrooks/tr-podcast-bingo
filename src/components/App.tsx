@@ -1,11 +1,11 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { boardData } from "../data";
+import { cardData } from "../data";
 import { colors } from "../styles";
-import { Board, Row, Square } from "./styled";
+import { Card, Row, Square } from "./styled";
 import { checkIsGameOver } from "../utils";
 
-const initialBoard = [
+const initialCard = [
   [0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0],
   [0, 0, 1, 0, 0],
@@ -19,30 +19,30 @@ const decodePosition = (position: string): [number, number] => {
 };
 
 const App = () => {
-  const [board, setBoard] = useState(initialBoard);
-  const isGameOver = checkIsGameOver(board);
+  const [card, setCard] = useState(initialCard);
+  const isGameOver = checkIsGameOver(card);
 
   const getSquareIsActive = (position: string): boolean => {
     const [row, square] = decodePosition(position);
-    return board[Number(row)][Number(square)] === 1;
+    return card[Number(row)][Number(square)] === 1;
   };
 
   const handleSquareClick = (position: string) => {
     const [row, square] = decodePosition(position);
-    const currentIsActive = board[row][square];
+    const currentIsActive = card[row][square];
     const nextIsActive = currentIsActive === 0 ? 1 : 0;
-    setBoard((currentBoard) => {
-      const nextBoard = currentBoard.map((row) => row.slice()); // https://stackoverflow.com/a/13756775
-      nextBoard[row][square] = nextIsActive;
-      return nextBoard;
+    setCard((currentCard) => {
+      const nextCard = currentCard.map((row) => row.slice()); // https://stackoverflow.com/a/13756775
+      nextCard[row][square] = nextIsActive;
+      return nextCard;
     });
   };
 
   return (
     <div className="container">
       <Heading>Podcast Bingo</Heading>
-      <Board className="mb-3">
-        {boardData.map((row, rowIdx) => (
+      <Card className="mb-3">
+        {cardData.map((row, rowIdx) => (
           <Row key={rowIdx}>
             {row.map((text, colIdx) => {
               const position = `${rowIdx}-${colIdx}`;
@@ -59,13 +59,13 @@ const App = () => {
             })}
           </Row>
         ))}
-      </Board>
+      </Card>
       {isGameOver && (
         <div className="mb-4 text-center">
           <button
             type="button"
             className="btn btn-outline-dark"
-            onClick={() => setBoard(initialBoard)}
+            onClick={() => setCard(initialCard)}
           >
             Reset
           </button>

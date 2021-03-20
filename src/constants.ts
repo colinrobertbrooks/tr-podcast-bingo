@@ -1,1 +1,1 @@
-export const TR_LOGO_SQUARE = "TR_LOGO_SQUARE";
+export const FREE_SPACE = "FREE_SPACE";

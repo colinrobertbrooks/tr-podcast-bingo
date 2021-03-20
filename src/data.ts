@@ -1,7 +1,7 @@
-import { TR_LOGO_SQUARE } from "./constants";
+import { FREE_SPACE } from "./constants";
 
 // https://www.instagram.com/p/CMm2gFEFvo_/
-export const boardData = [
+export const cardData = [
   [
     'JONATHAN SAYS "EXACTLY RIGHT"',
     '"WE\'RE HIRING!"',
@@ -19,7 +19,7 @@ export const boardData = [
   [
     "JONATHAN DROPS THAT TR SPONSORS THE STAN'S PIVOT TEAM",
     "CHAD DOES A DEEP DIVE LASTING LONGER THAN 5 MINUTES",
-    TR_LOGO_SQUARE,
+    FREE_SPACE,
     '"CONSULT YOUR DOCTOR"',
     "COACHES DEFER TO EX PRO AMBER PIERCE'S EXPERIENCE",
   ],
