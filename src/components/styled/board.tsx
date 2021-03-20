@@ -5,6 +5,7 @@ import FitText from "@kennethormandy/react-fittext";
 import { colors, unstyledButtonCSS } from "../../styles";
 import { TR_LOGO_SQUARE } from "../../constants";
 import logoSrc from "../../images/logo.png";
+import Confetti from "./Confetti";
 
 /*
  *  container
@@ -32,6 +33,7 @@ export const SquareOuter = styled.div`
   margin-top: 1px;
   margin-right: 1px;
   outline: 1px solid ${colors.lightGray};
+  position: relative;
   width: 20%;
 `;
 
@@ -49,7 +51,7 @@ export const SquareButton = styled.button<{ isActive: boolean }>`
   }
 
   &:disabled {
-    opacity: 0.5;
+    cursor: not-allowed;
   }
 `;
 
@@ -72,7 +74,10 @@ export const Square: React.FC<ISquareProps> = ({
   return (
     <SquareOuter ref={borderRef} style={{ minHeight: borderWidth }}>
       {isLogoSquare ? (
-        <img src={logoSrc} alt="Logo" className="img-fluid" />
+        <>
+          <Confetti active={isDisabled} />
+          <img src={logoSrc} alt="Logo" className="img-fluid" />
+        </>
       ) : (
         <SquareButton
           type="button"

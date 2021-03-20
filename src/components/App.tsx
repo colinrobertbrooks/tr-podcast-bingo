@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import { boardData } from "../data";
 import { colors } from "../styles";
@@ -32,7 +32,7 @@ const App = () => {
     const currentIsActive = board[row][square];
     const nextIsActive = currentIsActive === 0 ? 1 : 0;
     setBoard((currentBoard) => {
-      let nextBoard = [...currentBoard];
+      const nextBoard = currentBoard.map((row) => row.slice()); // https://stackoverflow.com/a/13756775
       nextBoard[row][square] = nextIsActive;
       return nextBoard;
     });
