@@ -2,10 +2,10 @@ import { FREE_SPACE } from "./constants";
 import { shuffle } from "./utils";
 
 /*
- *  options
+ *  options (currently 29 for 24 squares)
  */
 const texts = [
-  // https://www.instagram.com/p/CMm2gFEFvo_/
+  // initial (https://www.instagram.com/p/CMm2gFEFvo_)
   `JONATHAN SAYS "EXACTLY RIGHT"`,
   `"WE'RE HIRING!"`,
   `COACHES DISCUSS THE 3 OF THEM DOING A TRIATHLON IN THE FUTURE`,
@@ -30,7 +30,7 @@ const texts = [
   `SPRINTING FORM IS DISCUSSED`,
   `JONATHAN'S WEAK STOMACH IS TALKED ABOUT`,
   `ANYONE'S FTP IS MENTIONED`,
-  // later
+  // subsequent
   `BEET JUICE IS MENTIONED`,
   `TART CHERRY JUICE IS MENTIONED`,
   `SEA LEVEL VS. ALTITUDE IS DISCUSSED`,
@@ -50,8 +50,8 @@ export const getRandomOptions = () => {
         row.push(FREE_SPACE);
       } else {
         row.push(shuffledTexts[shuffledTextsIdx]);
+        shuffledTextsIdx++;
       }
-      shuffledTextsIdx++;
     }
     options.push(row);
   }
