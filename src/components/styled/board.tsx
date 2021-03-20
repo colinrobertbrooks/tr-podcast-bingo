@@ -44,7 +44,7 @@ export const SquareButton = styled.button<{ isActive: boolean }>`
   width: 100%;
 
   &:hover,
-  &:focus {
+  &:focus-visible {
     background: ${({ isActive }) => (isActive ? colors.red : colors.lightRed)};
   }
 `;
