@@ -1,4 +1,17 @@
 /*
+ *  data
+ */
+// https://stackoverflow.com/a/46161940
+export const shuffle = (array: any[]): any[] => {
+  const shuffled = array.slice();
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const rand = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[rand]] = [shuffled[rand], shuffled[i]];
+  }
+  return shuffled;
+};
+
+/*
  *  squares
  */
 export const encodePosition = (row: number, square: number): string =>
