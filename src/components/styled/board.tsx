@@ -43,19 +43,25 @@ export const SquareButton = styled.button<{ isActive: boolean }>`
   padding: 10px;
   width: 100%;
 
-  &:hover,
+  &:hover:enabled,
   &:focus-visible {
     background: ${({ isActive }) => (isActive ? colors.red : colors.lightRed)};
+  }
+
+  &:disabled {
+    opacity: 0.5;
   }
 `;
 
 interface ISquareProps {
   isActive: boolean;
+  isDisabled: boolean;
   onClick: () => void;
 }
 
 export const Square: React.FC<ISquareProps> = ({
   isActive,
+  isDisabled,
   onClick,
   children,
 }) => {
@@ -68,7 +74,12 @@ export const Square: React.FC<ISquareProps> = ({
       {isLogoSquare ? (
         <img src={logoSrc} alt="Logo" className="img-fluid" />
       ) : (
-        <SquareButton isActive={isActive} onClick={onClick}>
+        <SquareButton
+          type="button"
+          isActive={isActive}
+          disabled={isDisabled}
+          onClick={onClick}
+        >
           <FitText>{children}</FitText>
         </SquareButton>
       )}
