@@ -1,3 +1,17 @@
+/*
+ *  squares
+ */
+export const encodePosition = (row: number, square: number): string =>
+  `${row}-${square}`;
+
+export const decodePosition = (position: string): [number, number] => {
+  const [row, square] = position.split("-");
+  return [Number(row), Number(square)];
+};
+
+/*
+ *  game
+ */
 const checkIsAllOnes = (row: number[]): boolean =>
   row.every((square) => square === 1);
 

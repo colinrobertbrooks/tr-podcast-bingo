@@ -3,12 +3,7 @@ import styled from "styled-components";
 import { initialOptions, initialSelections } from "../data";
 import { colors } from "../styles";
 import { Card, Row, Square } from "./styled";
-import { checkIsGameOver } from "../utils";
-
-const decodePosition = (position: string): [number, number] => {
-  const [row, square] = position.split("-");
-  return [Number(row), Number(square)];
-};
+import { encodePosition, decodePosition, checkIsGameOver } from "../utils";
 
 const App = () => {
   /*
@@ -52,7 +47,7 @@ const App = () => {
         {options.map((row, rowIdx) => (
           <Row key={rowIdx}>
             {row.map((option, squareIdx) => {
-              const position = `${rowIdx}-${squareIdx}`;
+              const position = encodePosition(rowIdx, squareIdx);
               return (
                 <Square
                   key={position}
