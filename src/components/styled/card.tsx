@@ -12,9 +12,9 @@ import Confetti from "./Confetti";
  */
 export const Card = styled.div`
   box-shadow: 0px 0px 12px 0px rgba(0, 25, 50, 0.12);
+  margin: 0 auto;
   max-height: 80vh;
   max-width: 80vh;
-  margin: 0 auto;
 `;
 
 /*
@@ -37,17 +37,19 @@ export const SquareOuter = styled.div`
   width: 20%;
 `;
 
-export const SquareButton = styled.button<{ isActive: boolean }>`
+export const SquareButton = styled.button<{ isSelected: boolean }>`
   ${unstyledButtonCSS}
-  background: ${({ isActive }) => (isActive ? colors.darkRed : colors.white)};
-  color: ${({ isActive }) => (isActive ? colors.white : colors.gray)};
+  background: ${({ isSelected }) =>
+    isSelected ? colors.darkRed : colors.white};
+  color: ${({ isSelected }) => (isSelected ? colors.white : colors.gray)};
   height: 100%;
   padding: 10px;
   width: 100%;
 
   &:hover:enabled,
   &:focus-visible {
-    background: ${({ isActive }) => (isActive ? colors.red : colors.lightRed)};
+    background: ${({ isSelected }) =>
+      isSelected ? colors.red : colors.lightRed};
   }
 
   &:disabled {
@@ -56,33 +58,33 @@ export const SquareButton = styled.button<{ isActive: boolean }>`
 `;
 
 interface ISquareProps {
-  isActive: boolean;
-  isDisabled: boolean;
+  isGameOver: boolean;
+  isSelected: boolean;
   onClick: () => void;
 }
 
 export const Square: React.FC<ISquareProps> = ({
-  isActive,
-  isDisabled,
+  isGameOver,
+  isSelected,
   onClick,
   children,
 }) => {
-  const borderRef = useRef(null);
-  const [borderWidth] = useSize(borderRef);
-  const isLogoSquare = children?.toString().includes(FREE_SPACE);
+  const outerRef = useRef(null);
+  const [outerWidth] = useSize(outerRef);
+  const isFreeSpace = children?.toString() === FREE_SPACE;
 
   return (
-    <SquareOuter ref={borderRef} style={{ minHeight: borderWidth }}>
-      {isLogoSquare ? (
+    <SquareOuter ref={outerRef} style={{ minHeight: outerWidth }}>
+      {isFreeSpace ? (
         <>
-          <Confetti active={isDisabled} />
+          <Confetti isActive={isGameOver} />
           <img src={logoSrc} alt="Free space" className="img-fluid" />
         </>
       ) : (
         <SquareButton
           type="button"
-          isActive={isActive}
-          disabled={isDisabled}
+          disabled={isGameOver}
+          isSelected={isSelected}
           onClick={onClick}
         >
           <FitText>{children}</FitText>

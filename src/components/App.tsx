@@ -1,17 +1,9 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { cardData } from "../data";
+import { initialOptions, initialSelections } from "../data";
 import { colors } from "../styles";
 import { Card, Row, Square } from "./styled";
 import { checkIsGameOver } from "../utils";
-
-const initialCard = [
-  [0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0],
-  [0, 0, 1, 0, 0],
-  [0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0],
-];
 
 const decodePosition = (position: string): [number, number] => {
   const [row, square] = position.split("-");
@@ -19,41 +11,56 @@ const decodePosition = (position: string): [number, number] => {
 };
 
 const App = () => {
-  const [card, setCard] = useState(initialCard);
-  const isGameOver = checkIsGameOver(card);
+  /*
+   *  card
+   */
+  const [options] = useState<string[][]>(initialOptions); // NOTE: could randomize
+  const [selections, setSelections] = useState<number[][]>(initialSelections);
 
-  const getSquareIsActive = (position: string): boolean => {
+  /*
+   *  squares
+   */
+  const getSquareIsSelected = (position: string): boolean => {
     const [row, square] = decodePosition(position);
-    return card[Number(row)][Number(square)] === 1;
+    return selections[Number(row)][Number(square)] === 1;
   };
 
-  const handleSquareClick = (position: string) => {
+  const handleSquareClick = (position: string): void => {
     const [row, square] = decodePosition(position);
-    const currentIsActive = card[row][square];
-    const nextIsActive = currentIsActive === 0 ? 1 : 0;
-    setCard((currentCard) => {
-      const nextCard = currentCard.map((row) => row.slice()); // https://stackoverflow.com/a/13756775
-      nextCard[row][square] = nextIsActive;
-      return nextCard;
+    const currentIsSelected = selections[row][square];
+    const nextIsSelected = currentIsSelected === 0 ? 1 : 0;
+    setSelections((currentSelections) => {
+      const nextSelections = currentSelections.map((row) => row.slice()); // https://stackoverflow.com/a/13756775
+      nextSelections[row][square] = nextIsSelected;
+      return nextSelections;
     });
+  };
+
+  /*
+   *  game
+   */
+  const isGameOver = checkIsGameOver(selections);
+
+  const handleReset = () => {
+    setSelections(initialSelections);
   };
 
   return (
     <div className="container">
       <Heading>Podcast Bingo</Heading>
       <Card className="mb-3">
-        {cardData.map((row, rowIdx) => (
+        {options.map((row, rowIdx) => (
           <Row key={rowIdx}>
-            {row.map((text, colIdx) => {
-              const position = `${rowIdx}-${colIdx}`;
+            {row.map((option, squareIdx) => {
+              const position = `${rowIdx}-${squareIdx}`;
               return (
                 <Square
                   key={position}
-                  isActive={getSquareIsActive(position)}
-                  isDisabled={isGameOver}
+                  isGameOver={isGameOver}
+                  isSelected={getSquareIsSelected(position)}
                   onClick={() => handleSquareClick(position)}
                 >
-                  {text}
+                  {option}
                 </Square>
               );
             })}
@@ -65,7 +72,7 @@ const App = () => {
           <button
             type="button"
             className="btn btn-outline-dark"
-            onClick={() => setCard(initialCard)}
+            onClick={handleReset}
           >
             Reset
           </button>
@@ -77,6 +84,7 @@ const App = () => {
 
 const Heading = styled.h1.attrs({ className: "my-4 text-center" })`
   color: ${colors.darkGray};
+  font-weight: 600;
 `;
 
 export default App;

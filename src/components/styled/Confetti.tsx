@@ -2,15 +2,20 @@ import styled from "styled-components";
 import ReactDomConfetti from "react-dom-confetti";
 import { colors } from "../../styles";
 
-const Confetti = ({ active }: { active: boolean }) => (
+const Confetti = ({ isActive }: { isActive: boolean }) => (
   <Position>
     <ReactDomConfetti
-      active={active}
+      active={isActive}
       config={{
         angle: 180,
         elementCount: 250,
         spread: 360,
-        colors: [colors.white, colors.darkRed, colors.darkGray],
+        colors: [
+          colors.lightGray,
+          colors.darkGray,
+          colors.lightRed,
+          colors.darkRed,
+        ],
       }}
     />
   </Position>

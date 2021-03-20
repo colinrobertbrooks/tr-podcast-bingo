@@ -1,7 +1,7 @@
 import { FREE_SPACE } from "./constants";
 
 // https://www.instagram.com/p/CMm2gFEFvo_/
-export const cardData = [
+export const initialOptions = [
   [
     'JONATHAN SAYS "EXACTLY RIGHT"',
     '"WE\'RE HIRING!"',
@@ -37,4 +37,12 @@ export const cardData = [
     "JONATHAN'S WEAK STOMACH IS TALKED ABOUT",
     "ANYONE'S FTP IS MENTIONED",
   ],
+];
+
+export const initialSelections = [
+  [0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0],
+  [0, 0, 1, 0, 0],
+  [0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0],
 ];
