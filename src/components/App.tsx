@@ -1,31 +1,63 @@
+import { useState } from "react";
 import styled from "styled-components";
 import { boardData } from "../data";
 import { colors } from "../styles";
-import { BoardContainer, BoardRow, BoardSquare } from "./styled";
+import { Board, Row, Square } from "./styled";
+
+const initialBoard = [
+  [0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0],
+  [0, 0, 1, 0, 0],
+  [0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0],
+];
+
+const decodePosition = (position: string) => {
+  const [row, square] = position.split("-");
+  return [Number(row), Number(square)];
+};
 
 const App = () => {
+  const [board, setBoard] = useState(initialBoard);
+
+  const getSquareIsActive = (position: string) => {
+    const [row, square] = decodePosition(position);
+    return board[Number(row)][Number(square)] === 1;
+  };
+
+  const handleSquareClick = (position: string) => {
+    const [row, square] = decodePosition(position);
+    const currentIsActive = board[row][square];
+    const nextIsActive = currentIsActive === 0 ? 1 : 0;
+    setBoard((currentBoard) => {
+      let nextBoard = [...currentBoard];
+      nextBoard[row][square] = nextIsActive;
+      return nextBoard;
+    });
+  };
+
   return (
     <div className="container">
       <Heading>Podcast Bingo</Heading>
-      <BoardContainer>
+      <Board>
         {boardData.map((row, rowIdx) => (
-          <BoardRow key={rowIdx}>
+          <Row key={rowIdx}>
             {row.map((text, colIdx) => {
               const position = `${rowIdx}-${colIdx}`;
 
               return (
-                <BoardSquare
+                <Square
                   key={position}
-                  isActive={false}
-                  onClick={() => console.log(position)}
+                  isActive={getSquareIsActive(position)}
+                  onClick={() => handleSquareClick(position)}
                 >
                   {text}
-                </BoardSquare>
+                </Square>
               );
             })}
-          </BoardRow>
+          </Row>
         ))}
-      </BoardContainer>
+      </Board>
     </div>
   );
 };

@@ -9,7 +9,7 @@ import logoSrc from "../../images/logo.png";
 /*
  *  container
  */
-export const BoardContainer = styled.div`
+export const Board = styled.div`
   box-shadow: 0px 0px 12px 0px rgba(0, 25, 50, 0.12);
   max-height: 80vh;
   max-width: 80vh;
@@ -19,7 +19,7 @@ export const BoardContainer = styled.div`
 /*
  *  row
  */
-export const BoardRow = styled.div`
+export const Row = styled.div`
   align-items: stretch;
   display: flex;
   width: 100%;
@@ -28,14 +28,14 @@ export const BoardRow = styled.div`
 /*
  *  square
  */
-export const BoardSquareOuter = styled.div`
+export const SquareOuter = styled.div`
   margin-top: 1px;
   margin-right: 1px;
   outline: 1px solid ${colors.lightGray};
   width: 20%;
 `;
 
-export const BoardSquareButton = styled.button<{ isActive: boolean }>`
+export const SquareButton = styled.button<{ isActive: boolean }>`
   ${unstyledButtonCSS}
   background: ${({ isActive }) => (isActive ? colors.darkRed : colors.white)};
   color: ${({ isActive }) => (isActive ? colors.white : colors.gray)};
@@ -49,12 +49,12 @@ export const BoardSquareButton = styled.button<{ isActive: boolean }>`
   }
 `;
 
-interface IBoardSquareProps {
+interface ISquareProps {
   isActive: boolean;
   onClick: () => void;
 }
 
-export const BoardSquare: React.FC<IBoardSquareProps> = ({
+export const Square: React.FC<ISquareProps> = ({
   isActive,
   onClick,
   children,
@@ -64,14 +64,14 @@ export const BoardSquare: React.FC<IBoardSquareProps> = ({
   const isLogoSquare = children?.toString().includes(TR_LOGO_SQUARE);
 
   return (
-    <BoardSquareOuter ref={borderRef} style={{ minHeight: borderWidth }}>
+    <SquareOuter ref={borderRef} style={{ minHeight: borderWidth }}>
       {isLogoSquare ? (
         <img src={logoSrc} alt="Logo" className="img-fluid" />
       ) : (
-        <BoardSquareButton isActive={isActive} onClick={onClick}>
+        <SquareButton isActive={isActive} onClick={onClick}>
           <FitText>{children}</FitText>
-        </BoardSquareButton>
+        </SquareButton>
       )}
-    </BoardSquareOuter>
+    </SquareOuter>
   );
 };
