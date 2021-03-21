@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { getRandomOptions, initialSelections } from "../data";
 import { colors } from "../styles";
 import { Card, Row, Square } from "./styled";
-import { encodePosition, decodePosition, checkIsGameOver } from "../utils";
+import { checkIsGameOver } from "../utils";
 
 const App = () => {
   /*
@@ -15,18 +15,15 @@ const App = () => {
   /*
    *  squares
    */
-  const getSquareIsSelected = (position: string): boolean => {
-    const [row, square] = decodePosition(position);
-    return selections[Number(row)][Number(square)] === 1;
-  };
+  const getSquareIsSelected = (rowIdx: number, squareIdx: number): boolean =>
+    selections[rowIdx][squareIdx] === 1;
 
-  const handleSquareClick = (position: string): void => {
-    const [row, square] = decodePosition(position);
-    const currentIsSelected = selections[row][square];
+  const handleSquareClick = (rowIdx: number, squareIdx: number): void => {
+    const currentIsSelected = selections[rowIdx][squareIdx];
     const nextIsSelected = currentIsSelected === 0 ? 1 : 0;
     setSelections((currentSelections) => {
       const nextSelections = currentSelections.map((row) => row.slice()); // https://stackoverflow.com/a/13756775
-      nextSelections[row][square] = nextIsSelected;
+      nextSelections[rowIdx][squareIdx] = nextIsSelected;
       return nextSelections;
     });
   };
@@ -48,13 +45,13 @@ const App = () => {
         {options.map((row, rowIdx) => (
           <Row key={rowIdx}>
             {row.map((option, squareIdx) => {
-              const position = encodePosition(rowIdx, squareIdx);
+              const position = `${rowIdx}-${squareIdx}`;
               return (
                 <Square
                   key={position}
                   isGameOver={isGameOver}
-                  isSelected={getSquareIsSelected(position)}
-                  onClick={() => handleSquareClick(position)}
+                  isSelected={getSquareIsSelected(rowIdx, squareIdx)}
+                  onClick={() => handleSquareClick(rowIdx, squareIdx)}
                 >
                   {option}
                 </Square>
