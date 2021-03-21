@@ -2,9 +2,9 @@ import { FREE_SPACE } from "./constants";
 import { shuffle } from "./utils";
 
 /*
- *  options (currently 29 for 24 squares)
+ *  options
  */
-const texts = [
+export const texts = [
   // initial (https://www.instagram.com/p/CMm2gFEFvo_)
   `JONATHAN SAYS "EXACTLY RIGHT"`,
   `"WE'RE HIRING!"`,

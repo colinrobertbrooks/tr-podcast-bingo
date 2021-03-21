@@ -68,13 +68,18 @@ export const Square: React.FC<ISquareProps> = ({
   isSelected,
   onClick,
   children,
+  ...restProps
 }) => {
   const outerRef = useRef(null);
   const [outerWidth] = useSize(outerRef);
   const isFreeSpace = children?.toString() === FREE_SPACE;
 
   return (
-    <SquareOuter ref={outerRef} style={{ minHeight: outerWidth }}>
+    <SquareOuter
+      ref={outerRef}
+      style={{ minHeight: outerWidth }}
+      {...restProps}
+    >
       {isFreeSpace ? (
         <>
           <Confetti isActive={isGameOver} />
