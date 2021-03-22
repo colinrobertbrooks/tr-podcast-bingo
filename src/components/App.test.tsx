@@ -37,7 +37,7 @@ describe("layout", () => {
   test("renders 24 unselected option squares with unique texts", () => {
     renderApp();
     const optionSquares = getAllSquares();
-    const optionSquareButtonStyles = optionSquares
+    const optionButtonStyles = optionSquares
       .map((el) => {
         const button = Array.from(el.children).find(
           (child) => child.tagName === "BUTTON"
@@ -45,15 +45,15 @@ describe("layout", () => {
         if (button) {
           return window.getComputedStyle(button);
         }
-        return undefined;
+        return null;
       })
-      .filter((bool) => bool);
-    const optionSquaresTextContents = optionSquares
+      .filter((el) => el);
+    const optionTexts = optionSquares
       .map((el) => el.textContent)
       .filter((textContent) => textContent);
     // unselected
     expect(
-      optionSquareButtonStyles.every((styles) => {
+      optionButtonStyles.every((styles) => {
         const { background, color } = styles!;
         return (
           //  white and gray
@@ -62,14 +62,10 @@ describe("layout", () => {
       })
     ).toBe(true);
     // unique texts
-    expect(
-      optionSquaresTextContents.every((option) => texts.includes(option!))
-    ).toBe(true);
-    expect(optionSquaresTextContents.length).toBe(
-      new Set(optionSquaresTextContents).size
-    );
+    expect(optionTexts.every((option) => texts.includes(option!))).toBe(true);
+    expect(optionTexts.length).toBe(new Set(optionTexts).size);
     // count
-    expect(optionSquareButtonStyles).toHaveLength(24);
-    expect(optionSquaresTextContents).toHaveLength(24);
+    expect(optionButtonStyles).toHaveLength(24);
+    expect(optionTexts).toHaveLength(24);
   });
 });
