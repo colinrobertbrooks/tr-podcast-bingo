@@ -34,13 +34,42 @@ describe("layout", () => {
     expect(freeSpaceImg).toHaveAttribute("alt", "Free space");
   });
 
-  test("renders 24 option squares with unique texts", () => {
+  test("renders 24 unselected option squares with unique texts", () => {
     renderApp();
-    const optionSquares = getAllSquares()
+    const optionSquares = getAllSquares();
+    const optionSquareButtonStyles = optionSquares
+      .map((el) => {
+        const button = Array.from(el.children).find(
+          (child) => child.tagName === "BUTTON"
+        );
+        if (button) {
+          return window.getComputedStyle(button);
+        }
+        return undefined;
+      })
+      .filter((bool) => bool);
+    const optionSquaresTextContents = optionSquares
       .map((el) => el.textContent)
       .filter((textContent) => textContent);
-    expect(optionSquares).toHaveLength(24);
-    expect(optionSquares.every((option) => texts.includes(option!))).toBe(true);
-    expect(optionSquares.length).toBe(new Set(optionSquares).size);
+    // unselected
+    expect(
+      optionSquareButtonStyles.every((styles) => {
+        const { background, color } = styles!;
+        return (
+          //  white and gray
+          background === "rgb(255, 255, 255)" && color === "rgb(80, 80, 80)"
+        );
+      })
+    ).toBe(true);
+    // unique texts
+    expect(
+      optionSquaresTextContents.every((option) => texts.includes(option!))
+    ).toBe(true);
+    expect(optionSquaresTextContents.length).toBe(
+      new Set(optionSquaresTextContents).size
+    );
+    // count
+    expect(optionSquareButtonStyles).toHaveLength(24);
+    expect(optionSquaresTextContents).toHaveLength(24);
   });
 });
