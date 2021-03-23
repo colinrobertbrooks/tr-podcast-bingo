@@ -15,7 +15,7 @@ export const shuffle = (array: any[]): any[] => {
  *  game
  */
 const checkIsAllOnes = (row: number[]): boolean =>
-  row.every((square) => square === 1);
+  row.every((selection) => selection === 1);
 
 // https://stackoverflow.com/a/41772644
 const transpose = (matrix: any[][]): any[][] =>

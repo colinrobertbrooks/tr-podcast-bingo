@@ -49,6 +49,7 @@ const App = () => {
               return (
                 <Square
                   key={position}
+                  data-testid={`square-${position}`}
                   isGameOver={isGameOver}
                   isSelected={getSquareIsSelected(rowIdx, squareIdx)}
                   onClick={() => handleSquareClick(rowIdx, squareIdx)}
