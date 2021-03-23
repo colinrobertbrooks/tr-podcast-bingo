@@ -85,7 +85,7 @@ describe("interactivity", () => {
     const testId = "square-1-1";
     const getOptionStyles = () =>
       getChildButtonStyles(screen.getByTestId(testId))!;
-    // select
+    // selected
     clickOptionSquare(testId);
     expect(getOptionStyles().background).toBe(colors.darkRed);
     expect(getOptionStyles().color).toBe(colors.white);
