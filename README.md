@@ -8,6 +8,10 @@
 
 `$ yarn start`
 
+## Test
+
+`$ yarn test`
+
 ## Build
 
 `$ yarn build`
