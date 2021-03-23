@@ -19,11 +19,14 @@ const colors = {
   darkRed: "rgb(218, 41, 28)",
 };
 
+const clickOptionSquare = (testId: string) =>
+  fireEvent.click(getChildButton(screen.getByTestId(testId))!);
+
 beforeEach(() => {
   render(<App />);
 });
 
-describe("layout", () => {
+describe("initial", () => {
   test("renders heading", () => {
     expect(screen.getByText("Podcast Bingo")).toBeInTheDocument();
   });
@@ -71,27 +74,62 @@ describe("layout", () => {
     expect(optionButtonStyles).toHaveLength(24);
     expect(optionTexts).toHaveLength(24);
   });
+
+  test("does not render reset button", () => {
+    expect(screen.queryByText("Reset")).not.toBeInTheDocument();
+  });
 });
 
 describe("interactivity", () => {
   test("toggles option square selection", () => {
-    const getOption = () => screen.getByTestId("square-1-1");
-    const findOptionButton = () => getChildButton(getOption())!;
-    const getOptionStyles = () => getChildButtonStyles(getOption())!;
+    const testId = "square-1-1";
+    const getOptionStyles = () =>
+      getChildButtonStyles(screen.getByTestId(testId))!;
     // select
-    fireEvent.click(findOptionButton());
+    clickOptionSquare(testId);
     expect(getOptionStyles().background).toBe(colors.darkRed);
     expect(getOptionStyles().color).toBe(colors.white);
     // unselected
-    fireEvent.click(findOptionButton());
+    clickOptionSquare(testId);
     expect(getOptionStyles().background).toBe(colors.white);
     expect(getOptionStyles().color).toBe(colors.gray);
   });
 });
 
-/*
- *  game over
- */
-// across
-// down
-// diagonal
+describe("game over", () => {
+  test("across", () => {
+    clickOptionSquare("square-1-0");
+    clickOptionSquare("square-1-1");
+    clickOptionSquare("square-1-2");
+    clickOptionSquare("square-1-3");
+    clickOptionSquare("square-1-4");
+    expect(screen.getByText("Reset")).toBeInTheDocument();
+  });
+
+  test("down", () => {
+    clickOptionSquare("square-0-3");
+    clickOptionSquare("square-1-3");
+    clickOptionSquare("square-2-3");
+    clickOptionSquare("square-3-3");
+    clickOptionSquare("square-4-3");
+    expect(screen.getByText("Reset")).toBeInTheDocument();
+  });
+
+  describe("diagonal", () => {
+    test("dexter", () => {
+      clickOptionSquare("square-0-0");
+      clickOptionSquare("square-1-1");
+      clickOptionSquare("square-3-3");
+      clickOptionSquare("square-4-4");
+      expect(screen.getByText("Reset")).toBeInTheDocument();
+    });
+
+    test("sinister", () => {
+      clickOptionSquare("square-0-4");
+      clickOptionSquare("square-1-3");
+      clickOptionSquare("square-3-1");
+      clickOptionSquare("square-4-0");
+      expect(screen.getByText("Reset")).toBeInTheDocument();
+    });
+  });
+});
