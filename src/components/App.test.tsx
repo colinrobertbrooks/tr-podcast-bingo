@@ -1,23 +1,38 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import App from "./App";
 import { texts } from "../data";
 
-const renderApp = () => render(<App />);
 const getAllSquares = () => screen.queryAllByTestId(/square/);
+
+const getChildButton = (el: HTMLElement) =>
+  Array.from(el.children).find((child) => child.tagName === "BUTTON");
+
+const getChildButtonStyles = (el: HTMLElement) => {
+  const button = getChildButton(el);
+  if (button) return window.getComputedStyle(button);
+  return null;
+};
+
+const colors = {
+  white: "rgb(255, 255, 255)",
+  gray: "rgb(80, 80, 80)",
+  darkRed: "rgb(218, 41, 28)",
+};
+
+beforeEach(() => {
+  render(<App />);
+});
 
 describe("layout", () => {
   test("renders heading", () => {
-    renderApp();
     expect(screen.getByText("Podcast Bingo")).toBeInTheDocument();
   });
 
   test("renders 25 squares", () => {
-    renderApp();
     expect(getAllSquares()).toHaveLength(25);
   });
 
   test("renders 1 free space square in the middle of the card", () => {
-    renderApp();
     const freeSpaceSquares = getAllSquares()
       .map((el) => {
         if (Array.from(el.children).some((child) => child.tagName === "IMG")) {
@@ -35,18 +50,9 @@ describe("layout", () => {
   });
 
   test("renders 24 unselected option squares with unique texts", () => {
-    renderApp();
     const optionSquares = getAllSquares();
     const optionButtonStyles = optionSquares
-      .map((el) => {
-        const button = Array.from(el.children).find(
-          (child) => child.tagName === "BUTTON"
-        );
-        if (button) {
-          return window.getComputedStyle(button);
-        }
-        return null;
-      })
+      .map(getChildButtonStyles)
       .filter((el) => el);
     const optionTexts = optionSquares
       .map((el) => el.textContent)
@@ -55,10 +61,7 @@ describe("layout", () => {
     expect(
       optionButtonStyles.every((styles) => {
         const { background, color } = styles!;
-        return (
-          //  white and gray
-          background === "rgb(255, 255, 255)" && color === "rgb(80, 80, 80)"
-        );
+        return background === colors.white && color === colors.gray;
       })
     ).toBe(true);
     // unique texts
@@ -69,3 +72,26 @@ describe("layout", () => {
     expect(optionTexts).toHaveLength(24);
   });
 });
+
+describe("interactivity", () => {
+  test("toggles option square selection", () => {
+    const getOption = () => screen.getByTestId("square-1-1");
+    const findOptionButton = () => getChildButton(getOption())!;
+    const getOptionStyles = () => getChildButtonStyles(getOption())!;
+    // select
+    fireEvent.click(findOptionButton());
+    expect(getOptionStyles().background).toBe(colors.darkRed);
+    expect(getOptionStyles().color).toBe(colors.white);
+    // unselected
+    fireEvent.click(findOptionButton());
+    expect(getOptionStyles().background).toBe(colors.white);
+    expect(getOptionStyles().color).toBe(colors.gray);
+  });
+});
+
+/*
+ *  game over
+ */
+// across
+// down
+// diagonal
