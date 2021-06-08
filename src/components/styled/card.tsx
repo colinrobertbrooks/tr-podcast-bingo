@@ -29,7 +29,7 @@ export const Row = styled.div`
 /*
  *  square
  */
-export const SquareOuter = styled.div`
+const SquareOuter = styled.div`
   margin-top: 1px;
   margin-right: 1px;
   outline: 1px solid ${colors.lightGray};
@@ -37,7 +37,7 @@ export const SquareOuter = styled.div`
   width: 20%;
 `;
 
-export const SquareButton = styled.button<{ isSelected: boolean }>`
+const SquareButton = styled.button<{ isSelected: boolean }>`
   ${unstyledButtonCSS}
   background: ${({ isSelected }) =>
     isSelected ? colors.darkRed : colors.white};
